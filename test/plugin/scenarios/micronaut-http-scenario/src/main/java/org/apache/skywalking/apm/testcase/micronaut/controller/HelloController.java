@@ -34,7 +34,7 @@ public class HelloController {
 
     @Get(value = "healthCheck")
     public String checkHealth() {
-        return client.toBlocking().retrieve(HttpRequest.GET("/micronaut/success"));
+        return "checked";
     }
 
     @Get(produces = MediaType.TEXT_PLAIN, value = "start")

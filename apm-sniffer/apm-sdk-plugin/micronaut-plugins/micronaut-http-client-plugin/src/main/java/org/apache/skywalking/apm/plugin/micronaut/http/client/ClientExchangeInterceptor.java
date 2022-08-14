@@ -23,6 +23,7 @@ import io.micronaut.http.MutableHttpRequest;
 import org.apache.skywalking.apm.agent.core.context.CarrierItem;
 import org.apache.skywalking.apm.agent.core.context.ContextCarrier;
 import org.apache.skywalking.apm.agent.core.context.ContextManager;
+import org.apache.skywalking.apm.agent.core.context.ContextSnapshot;
 import org.apache.skywalking.apm.agent.core.context.tag.Tags;
 import org.apache.skywalking.apm.agent.core.context.trace.AbstractSpan;
 import org.apache.skywalking.apm.agent.core.context.trace.SpanLayer;
@@ -42,10 +43,38 @@ public class ClientExchangeInterceptor implements InstanceMethodsAroundIntercept
 
     @Override
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, MethodInterceptResult result) throws Throwable {
+
+    }
+
+    @Override
+    public Object afterMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, Object ret) throws Throwable {
+        Publisher<HttpResponse<?>> retPublisher = (Publisher<HttpResponse<?>>) ret;
         MutableHttpRequest<?> request = (MutableHttpRequest<?>) allArguments[0];
+        ContextSnapshot capture = ContextManager.capture();
+        return Flux.deferContextual(contextView -> {
+            contextView.getOrEmpty("content_micronaut").ifPresent(e -> ContextManager.continued((ContextSnapshot) e));
+            createExitSpan(request, (RequestBaseInfo) objInst.getSkyWalkingDynamicField());
+            return Flux.from(retPublisher)
+                    .doOnError(ex -> finishAndCleanup(request, ex))
+                    .doOnNext(resp -> {
+                        request.getAttribute(ASYNC_SPAN_KEY)
+                                .map(span -> (AbstractSpan) span)
+                                .ifPresent(span -> {
+                                    Tags.HTTP_RESPONSE_STATUS_CODE.set(span, resp.code());
+                                    if (resp.code() >= 400) {
+                                        span.errorOccurred();
+                                    }
+                                    span.asyncFinish();
+                                });
+                        request.removeAttribute(ASYNC_SPAN_KEY, AbstractSpan.class);
+                    });
+        }).contextWrite(context -> context.put("content_micronaut", capture));
+    }
+
+    private void createExitSpan(MutableHttpRequest<?> request, RequestBaseInfo requestBaseInfo) {
         final ContextCarrier contextCarrier = new ContextCarrier();
         String requestMethod = request.getMethod().name();
-        RequestBaseInfo requestBaseInfo = (RequestBaseInfo) objInst.getSkyWalkingDynamicField();
+
         AbstractSpan span = ContextManager.createExitSpan(requestMethod + ":" + request.getPath(), contextCarrier, requestBaseInfo.getPeer());
         span.setComponent(ComponentsDefine.MICRONAUT);
         Tags.HTTP.METHOD.set(span, requestMethod);
@@ -62,26 +91,7 @@ public class ClientExchangeInterceptor implements InstanceMethodsAroundIntercept
         if (MicronautHttpClientPluginConfig.Plugin.MicronautHttpClient.COLLECT_HTTP_PARAMS) {
             collectHttpParam(request, span);
         }
-    }
 
-    @Override
-    public Object afterMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, Object ret) throws Throwable {
-        Publisher<HttpResponse<?>> retPublisher = (Publisher<HttpResponse<?>>) ret;
-        MutableHttpRequest<?> request = (MutableHttpRequest<?>) allArguments[0];
-        return Flux.from(retPublisher)
-                .doOnError(ex -> finishAndCleanup(request, ex))
-                .doOnNext(resp -> {
-                    request.getAttribute(ASYNC_SPAN_KEY)
-                            .map(span -> (AbstractSpan) span)
-                            .ifPresent(span -> {
-                                Tags.HTTP_RESPONSE_STATUS_CODE.set(span, resp.code());
-                                if (resp.code() >= 400) {
-                                    span.errorOccurred();
-                                }
-                                span.asyncFinish();
-                            });
-                    request.removeAttribute(ASYNC_SPAN_KEY, AbstractSpan.class);
-                });
     }
 
     @Override

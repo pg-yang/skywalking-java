@@ -29,12 +29,11 @@ import static net.bytebuddy.matcher.ElementMatchers.named;
 import static net.bytebuddy.matcher.ElementMatchers.takesArguments;
 import static org.apache.skywalking.apm.agent.core.plugin.match.NameMatch.byName;
 
-public class MicronautServerInstrumentation extends ClassInstanceMethodsEnhancePluginDefine {
+public class RouteExecutorInstrumentation extends ClassInstanceMethodsEnhancePluginDefine {
 
-    private static final String ENHANCE_CLASS = "io.micronaut.http.server.netty.RoutingInBoundHandler";
+    private static final String ENHANCE_CLASS = "io.micronaut.http.server.RouteExecutor";
 
-    private static final String SERVER_REQUEST_INTERCEPT_CLASS = "org.apache.skywalking.apm.plugin.micronaut.http.server.ServerChannelReadInterceptor";
-    private static final String ENCODE_RESPONSE_INTERCEPTOR = "org.apache.skywalking.apm.plugin.micronaut.http.server.ServerWriteAndFlushNettyInterceptor";
+    private static final String ENCODE_RESPONSE_INTERCEPTOR = "org.apache.skywalking.apm.plugin.micronaut.http.server.RouteExecutorInterceptor";
 
     @Override
     public ConstructorInterceptPoint[] getConstructorsInterceptPoints() {
@@ -44,26 +43,11 @@ public class MicronautServerInstrumentation extends ClassInstanceMethodsEnhanceP
     @Override
     public InstanceMethodsInterceptPoint[] getInstanceMethodsInterceptPoints() {
         return new InstanceMethodsInterceptPoint[]{
+
                 new InstanceMethodsInterceptPoint() {
                     @Override
                     public ElementMatcher<MethodDescription> getMethodsMatcher() {
-                        return named("channelRead0").and(takesArguments(2));
-                    }
-
-                    @Override
-                    public String getMethodsInterceptor() {
-                        return SERVER_REQUEST_INTERCEPT_CLASS;
-                    }
-
-                    @Override
-                    public boolean isOverrideArgs() {
-                        return false;
-                    }
-                },
-                new InstanceMethodsInterceptPoint() {
-                    @Override
-                    public ElementMatcher<MethodDescription> getMethodsMatcher() {
-                        return named("filterAndEncodeResponse").and(takesArguments(3));
+                        return named("executeRoute").and(takesArguments(3));
                     }
 
                     @Override
@@ -73,10 +57,9 @@ public class MicronautServerInstrumentation extends ClassInstanceMethodsEnhanceP
 
                     @Override
                     public boolean isOverrideArgs() {
-                        return true;
+                        return false;
                     }
                 }
-
         };
     }
 

@@ -27,25 +27,23 @@ import org.apache.skywalking.apm.agent.core.context.trace.AbstractSpan;
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.EnhancedInstance;
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.InstanceMethodsAroundInterceptor;
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.MethodInterceptResult;
-import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 
 import java.lang.reflect.Method;
 
-public class ServerWriteAndFlushNettyInterceptor implements InstanceMethodsAroundInterceptor {
+public class RouteExecutorInterceptor implements InstanceMethodsAroundInterceptor {
+    @Override
+    public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, MethodInterceptResult result) throws Throwable {
+
+    }
 
     @Override
-    public void beforeMethod(final EnhancedInstance objInst,
-                             final Method method,
-                             final Object[] allArguments,
-                             final Class<?>[] argumentsTypes,
-                             final MethodInterceptResult result) throws Throwable {
+    public Object afterMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, Object ret) throws Throwable {
 
-        Publisher<MutableHttpResponse<?>> publisher = (Publisher<MutableHttpResponse<?>>) allArguments[2];
         ContextSnapshot capture = ContextManager.capture();
         AbstractSpan span = ContextManager.activeSpan();
 
-        Publisher<MutableHttpResponse<?>> newArg = Flux.from(publisher)
+        return Flux.from((Flux<MutableHttpResponse<?>>) ret)
                 .contextWrite(content -> content.put("content_micronaut", capture))
                 .doOnNext(res -> {
                     int code = res.status().getCode();
@@ -58,25 +56,11 @@ public class ServerWriteAndFlushNettyInterceptor implements InstanceMethodsAroun
                     }
                     ContextManager.stopSpan();
                 });
-        allArguments[2] = newArg;
+
     }
 
     @Override
-    public Object afterMethod(final EnhancedInstance objInst,
-                              final Method method,
-                              final Object[] allArguments,
-                              final Class<?>[] argumentsTypes,
-                              final Object ret) throws Throwable {
-        return ret;
-    }
+    public void handleMethodException(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, Throwable t) {
 
-    @Override
-    public void handleMethodException(final EnhancedInstance objInst,
-                                      final Method method,
-                                      final Object[] allArguments,
-                                      final Class<?>[] argumentsTypes,
-                                      final Throwable t) {
-        ContextManager.activeSpan().errorOccurred().log(t);
     }
-
 }
