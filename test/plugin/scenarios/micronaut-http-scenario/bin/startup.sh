@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -14,24 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG BASE_IMAGE='eclipse-temurin:8-jre'
+home="$(cd "$(dirname $0)"; pwd)"
 
-ARG SKYWALKING_CLI_VERSION
-
-FROM apache/skywalking-cli:$SKYWALKING_CLI_VERSION as cli
-
-FROM $BASE_IMAGE
-
-ARG DIST=skywalking-agent
-
-RUN apk add --no-cache openssl || true
-
-LABEL maintainer="kezhenxu94@apache.org"
-
-ENV JAVA_TOOL_OPTIONS=-javaagent:/skywalking/agent/skywalking-agent.jar
-
-WORKDIR /skywalking
-
-ADD $DIST /skywalking/agent
-
-COPY --from=cli /swctl /usr/bin/swctl
+java -jar ${agent_opts} "-Dskywalking.agent.service_name=micronaut-scenario" "-Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &

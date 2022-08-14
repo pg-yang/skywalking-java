@@ -16,6 +16,7 @@ Release Notes.
 * Upgrade netty-codec-http2 to 4.1.79.Final.
 * Fix race condition causing agent to not reconnect after network error
 * Force the injected high-priority classes in order to avoid NoClassDefFoundError.
+* Add plugin to support Micronaut 3.2.x-3.6.x
 
 #### Documentation
 
