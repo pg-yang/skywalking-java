@@ -17,4 +17,5 @@
 # micronaut-http-server=org.apache.skywalking.apm.plugin.micronaut.http.server.define.MicronautServerInstrumentation
 #micronaut-http-server=org.apache.skywalking.apm.plugin.micronaut.http.server.define.RouteExecutorInstrumentation
 micronaut-http-server=org.apache.skywalking.apm.plugin.micronaut.http.server.define.RouteMatchInstrumentation
-micronaut-http-server=org.apache.skywalking.apm.plugin.micronaut.http.server.define.RouteExecutorInstrumentation
+# micronaut-http-server=org.apache.skywalking.apm.plugin.micronaut.http.server.define.RouteExecutorInstrumentation
+micronaut-http-server=org.apache.skywalking.apm.plugin.micronaut.http.server.define.RoutingInBoundHandlerInstrumentation

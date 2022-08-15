@@ -45,11 +45,12 @@ public class ClientExchangeInterceptor implements InstanceMethodsAroundIntercept
     @Override
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, MethodInterceptResult result) throws Throwable {
         MutableHttpRequest<?> request = (MutableHttpRequest<?>) allArguments[0];
-        final ContextCarrier contextCarrier = new ContextCarrier();
         String requestMethod = request.getMethod().name();
         RequestBaseInfo requestBaseInfo = (RequestBaseInfo) objInst.getSkyWalkingDynamicField();
-        AbstractSpan span = ContextManager.createExitSpan(requestMethod + ":" + request.getPath(), contextCarrier, requestBaseInfo.getPeer());
+        AbstractSpan span = ContextManager.createExitSpan(requestMethod + ":" + request.getPath(), requestBaseInfo.getPeer());
         ServerRequestContext.currentRequest().flatMap(req -> req.getAttribute("CORS_SNAPSHOT")).ifPresent(e -> ContextManager.continued((ContextSnapshot) e));
+        final ContextCarrier contextCarrier = new ContextCarrier();
+        ContextManager.inject(contextCarrier);
         span.setComponent(ComponentsDefine.MICRONAUT);
         Tags.HTTP.METHOD.set(span, requestMethod);
         Tags.URL.set(span, request.getPath().equals("/") ? requestBaseInfo.getBaseUrl() : requestBaseInfo.getBaseUrl() + request.getPath());

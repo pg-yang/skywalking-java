@@ -16,21 +16,15 @@
  *
  */
 
-package org.apache.skywalking.apm.plugin.micronaut.http.server;
-
-import io.micronaut.http.HttpRequest;
-import org.apache.skywalking.apm.agent.core.context.tag.Tags;
-import org.apache.skywalking.apm.agent.core.context.trace.AbstractSpan;
-import org.apache.skywalking.apm.util.StringUtil;
+package org.apache.skywalking.apm.plugin.micronaut.http.client;
 
 class HttpParamCollector {
 
-    static void collectHttpParam(HttpRequest<?> httpRequest, AbstractSpan span) {
-        String tag = httpRequest.getUri().getQuery();
-        tag = MicronautHttpServerPluginConfig.Plugin.Http.HTTP_PARAMS_LENGTH_THRESHOLD > 0 ?
-                StringUtil.cut(tag, MicronautHttpServerPluginConfig.Plugin.Http.HTTP_PARAMS_LENGTH_THRESHOLD) : tag;
-        if (StringUtil.isNotEmpty(tag)) {
-            Tags.HTTP.PARAMS.set(span, tag);
+    static void print(String s) {
+        try {
+            System.out.getClass().getMethod("println", String.class).invoke(System.out, s);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
