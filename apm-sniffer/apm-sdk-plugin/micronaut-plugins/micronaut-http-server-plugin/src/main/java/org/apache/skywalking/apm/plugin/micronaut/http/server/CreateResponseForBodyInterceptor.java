@@ -20,8 +20,6 @@ package org.apache.skywalking.apm.plugin.micronaut.http.server;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
-import org.apache.skywalking.apm.agent.core.context.ContextManager;
-import org.apache.skywalking.apm.agent.core.context.ContextSnapshot;
 import org.apache.skywalking.apm.agent.core.context.tag.Tags;
 import org.apache.skywalking.apm.agent.core.context.trace.AbstractSpan;
 import org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.EnhancedInstance;
@@ -31,32 +29,31 @@ import reactor.core.publisher.Flux;
 
 import java.lang.reflect.Method;
 
-public class RouteExecutorInterceptor implements InstanceMethodsAroundInterceptor {
+public class CreateResponseForBodyInterceptor implements InstanceMethodsAroundInterceptor {
+
     @Override
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, MethodInterceptResult result) throws Throwable {
-
     }
 
     @Override
     public Object afterMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, Object ret) throws Throwable {
-
-        ContextSnapshot capture = ContextManager.capture();
-        AbstractSpan span = ContextManager.activeSpan();
-
-        return Flux.from((Flux<MutableHttpResponse<?>>) ret)
-                .contextWrite(content -> content.put("content_micronaut", capture))
-                .doOnNext(res -> {
-                    int code = res.status().getCode();
-                    Tags.HTTP_RESPONSE_STATUS_CODE.set(span, code);
-                    if (code >= 400) {
-                        span.errorOccurred();
-                    }
-                    if (!MicronautHttpServerPluginConfig.Plugin.MicronautHttpServer.COLLECT_HTTP_PARAMS && span.isProfiling()) {
-                        HttpParamCollector.collectHttpParam((HttpRequest<?>) allArguments[1], span);
-                    }
-                    ContextManager.stopSpan();
-                });
-
+        HttpRequest<?> request = (HttpRequest<?>) allArguments[0];
+        Flux<MutableHttpResponse<?>> fluxRet = (Flux<MutableHttpResponse<?>>) ret;
+        return fluxRet.doOnNext(res -> {
+            request.getAttribute("CORS_SPAN")
+                    .map(span -> (AbstractSpan) span)
+                    .ifPresent(span -> {
+                        int code = res.status().getCode();
+                        Tags.HTTP_RESPONSE_STATUS_CODE.set(span, code);
+                        if (code >= 400) {
+                            span.errorOccurred();
+                        }
+                        if (!MicronautHttpServerPluginConfig.Plugin.MicronautHttpServer.COLLECT_HTTP_PARAMS && span.isProfiling()) {
+                            HttpParamCollector.collectHttpParam((HttpRequest<?>) allArguments[1], span);
+                        }
+                        span.asyncFinish();
+                    });
+        });
     }
 
     @Override

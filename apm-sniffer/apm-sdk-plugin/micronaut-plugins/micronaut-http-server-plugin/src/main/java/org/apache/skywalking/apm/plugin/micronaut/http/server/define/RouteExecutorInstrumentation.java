@@ -33,7 +33,7 @@ public class RouteExecutorInstrumentation extends ClassInstanceMethodsEnhancePlu
 
     private static final String ENHANCE_CLASS = "io.micronaut.http.server.RouteExecutor";
 
-    private static final String ENCODE_RESPONSE_INTERCEPTOR = "org.apache.skywalking.apm.plugin.micronaut.http.server.RouteExecutorInterceptor";
+    private static final String CREATE_INTERCEPTOR = "org.apache.skywalking.apm.plugin.micronaut.http.server.CreateResponseForBodyInterceptor";
 
     @Override
     public ConstructorInterceptPoint[] getConstructorsInterceptPoints() {
@@ -43,16 +43,15 @@ public class RouteExecutorInstrumentation extends ClassInstanceMethodsEnhancePlu
     @Override
     public InstanceMethodsInterceptPoint[] getInstanceMethodsInterceptPoints() {
         return new InstanceMethodsInterceptPoint[]{
-
                 new InstanceMethodsInterceptPoint() {
                     @Override
                     public ElementMatcher<MethodDescription> getMethodsMatcher() {
-                        return named("executeRoute").and(takesArguments(3));
+                        return named("createResponseForBody").and(takesArguments(3));
                     }
 
                     @Override
                     public String getMethodsInterceptor() {
-                        return ENCODE_RESPONSE_INTERCEPTOR;
+                        return CREATE_INTERCEPTOR;
                     }
 
                     @Override

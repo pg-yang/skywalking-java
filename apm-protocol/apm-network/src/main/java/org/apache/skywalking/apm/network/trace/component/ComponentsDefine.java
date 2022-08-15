@@ -227,5 +227,4 @@ public class ComponentsDefine {
 
     public static final OfficialComponent MICRONAUT = new OfficialComponent(131, "Micronaut");
 
-
 }

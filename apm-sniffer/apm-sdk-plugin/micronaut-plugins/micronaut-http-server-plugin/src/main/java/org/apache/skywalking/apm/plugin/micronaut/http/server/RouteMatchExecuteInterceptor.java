@@ -18,10 +18,11 @@
 
 package org.apache.skywalking.apm.plugin.micronaut.http.server;
 
-import io.micronaut.http.HttpRequest;
+import io.micronaut.http.context.ServerRequestContext;
 import org.apache.skywalking.apm.agent.core.context.CarrierItem;
 import org.apache.skywalking.apm.agent.core.context.ContextCarrier;
 import org.apache.skywalking.apm.agent.core.context.ContextManager;
+import org.apache.skywalking.apm.agent.core.context.ContextSnapshot;
 import org.apache.skywalking.apm.agent.core.context.tag.Tags;
 import org.apache.skywalking.apm.agent.core.context.trace.AbstractSpan;
 import org.apache.skywalking.apm.agent.core.context.trace.SpanLayer;
@@ -32,27 +33,33 @@ import org.apache.skywalking.apm.network.trace.component.ComponentsDefine;
 
 import java.lang.reflect.Method;
 
-public class ServerChannelReadInterceptor implements InstanceMethodsAroundInterceptor {
+public class RouteMatchExecuteInterceptor implements InstanceMethodsAroundInterceptor {
 
     @Override
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, MethodInterceptResult result) throws Throwable {
-        HttpRequest<?> request = (HttpRequest<?>) allArguments[1];
-        ContextCarrier contextCarrier = new ContextCarrier();
 
-        CarrierItem next = contextCarrier.items();
-        while (next.hasNext()) {
-            next = next.next();
-            next.setHeadValue(request.getHeaders().get(next.getHeadKey()));
-        }
-        String operationName = String.join(":", request.getMethod(), request.getPath());
-        AbstractSpan span = ContextManager.createEntrySpan(operationName, contextCarrier);
-        Tags.URL.set(span, String.format("%s://%s:%s%s", request.isSecure() ? "https" : "http", request.getServerName(), request.getServerAddress().getPort(), request.getUri().getPath()));
-        Tags.HTTP.METHOD.set(span, request.getMethodName());
-        span.setComponent(ComponentsDefine.MICRONAUT);
-        SpanLayer.asHttp(span);
-        if (MicronautHttpServerPluginConfig.Plugin.MicronautHttpServer.COLLECT_HTTP_PARAMS) {
-            HttpParamCollector.collectHttpParam(request, span);
-        }
+        ServerRequestContext.currentRequest().ifPresent(request -> {
+            ContextCarrier contextCarrier = new ContextCarrier();
+            CarrierItem next = contextCarrier.items();
+            while (next.hasNext()) {
+                next = next.next();
+                next.setHeadValue(request.getHeaders().get(next.getHeadKey()));
+            }
+            String operationName = String.join(":", request.getMethod(), request.getPath());
+            AbstractSpan span = ContextManager.createEntrySpan(operationName, contextCarrier);
+            ContextSnapshot capture = ContextManager.capture();
+            request.setAttribute("CORS_SPAN", span);
+            request.setAttribute("CORS_SNAPSHOT", capture);
+            Tags.URL.set(span, String.format("%s://%s:%s%s", request.isSecure() ? "https" : "http", request.getServerName(), request.getServerAddress().getPort(), request.getUri().getPath()));
+            Tags.HTTP.METHOD.set(span, request.getMethodName());
+            span.setComponent(ComponentsDefine.MICRONAUT);
+            SpanLayer.asHttp(span);
+            span.prepareForAsync();
+            ContextManager.stopSpan(span);
+            if (MicronautHttpServerPluginConfig.Plugin.MicronautHttpServer.COLLECT_HTTP_PARAMS) {
+                HttpParamCollector.collectHttpParam(request, span);
+            }
+        });
     }
 
     @Override
@@ -62,7 +69,6 @@ public class ServerChannelReadInterceptor implements InstanceMethodsAroundInterc
 
     @Override
     public void handleMethodException(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, Throwable t) {
-        ContextManager.activeSpan().errorOccurred().log(t);
-    }
 
+    }
 }
