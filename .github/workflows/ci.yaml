@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu, macos, windows ]
+        os: [ ubuntu,]
         java-version: [ 8 ]
         include:
           - os: ubuntu
