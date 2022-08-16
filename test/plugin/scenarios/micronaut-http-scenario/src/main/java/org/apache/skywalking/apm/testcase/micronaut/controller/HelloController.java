@@ -45,10 +45,15 @@ public class HelloController {
             e.printStackTrace();
         }
         try {
-            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
+            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/success2?a=1&b=2"));
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        try {
+//            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 //        try {
 //            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/error"));
 //        } catch (Exception e) {
@@ -58,6 +63,11 @@ public class HelloController {
     }
 
     @Get(produces = MediaType.TEXT_PLAIN, value = "success")
+    public String success() {
+        return "success"; //
+    }
+
+    @Get(produces = MediaType.TEXT_PLAIN, value = "success2")
     public String success() {
         return "success"; //
     }
