@@ -393,6 +393,7 @@
                         <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
 <sourceDirectory>scenarios/okhttp-scenario</sourceDirectory>
 <sourceDirectory>scenarios/spring-4.3.x-scenario</sourceDirectory>
+<sourceDirectory>scenarios/micronaut-http-scenario</sourceDirectory>
                     </sourceDirectories>
                     <resourceIncludes>
                         **/*.properties,

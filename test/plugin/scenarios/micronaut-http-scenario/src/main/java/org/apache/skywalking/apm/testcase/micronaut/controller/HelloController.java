@@ -44,11 +44,11 @@ public class HelloController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        try {
-//            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        try {
 //            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/error"));
 //        } catch (Exception e) {

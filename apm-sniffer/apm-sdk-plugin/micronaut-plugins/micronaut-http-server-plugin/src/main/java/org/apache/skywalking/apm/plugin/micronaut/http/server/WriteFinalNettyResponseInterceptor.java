@@ -36,6 +36,7 @@ public class WriteFinalNettyResponseInterceptor implements InstanceMethodsAround
         request.getAttribute("CORS_SPAN")
                 .map(span -> (AbstractSpan) span)
                 .ifPresent(span -> {
+                    PrintUtil.println(String.format("[Server] response %s , Thread - > %s", request.getUri(), Thread.currentThread()));
                     int code = message.status().getCode();
                     Tags.HTTP_RESPONSE_STATUS_CODE.set(span, code);
                     if (code >= 400) {

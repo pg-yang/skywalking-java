@@ -39,6 +39,7 @@ public class RouteMatchExecuteInterceptor implements InstanceMethodsAroundInterc
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, MethodInterceptResult result) throws Throwable {
 
         ServerRequestContext.currentRequest().ifPresent(request -> {
+            PrintUtil.println(String.format("[Server] receive %s , Thread - > %s", request.getUri(), Thread.currentThread()));
             ContextCarrier contextCarrier = new ContextCarrier();
             CarrierItem next = contextCarrier.items();
             while (next.hasNext()) {
