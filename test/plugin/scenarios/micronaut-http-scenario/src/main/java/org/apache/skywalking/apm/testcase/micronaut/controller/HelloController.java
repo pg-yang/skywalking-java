@@ -45,11 +45,6 @@ public class HelloController {
             e.printStackTrace();
         }
         try {
-            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/success2?a=1&b=2"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
         } catch (Exception e) {
             e.printStackTrace();
