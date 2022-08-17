@@ -16,6 +16,7 @@
 
 micronaut:
     server:
+      keepAliveOnServerError: true
       netty:
         log-level: TRACE
     client:
