@@ -45,6 +45,7 @@ public class ClientExchangeInterceptor implements InstanceMethodsAroundIntercept
     @Override
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes, MethodInterceptResult result) throws Throwable {
         MutableHttpRequest<?> request = (MutableHttpRequest<?>) allArguments[0];
+        PrintUtil.println(String.format("[Client] start request %s ", request.getPath()));
         String requestMethod = request.getMethod().name();
         RequestBaseInfo requestBaseInfo = (RequestBaseInfo) objInst.getSkyWalkingDynamicField();
         AbstractSpan span = ContextManager.createExitSpan(requestMethod + ":" + request.getPath(), requestBaseInfo.getPeer());
@@ -74,6 +75,7 @@ public class ClientExchangeInterceptor implements InstanceMethodsAroundIntercept
         Publisher<HttpResponse<?>> retPublisher = (Publisher<HttpResponse<?>>) ret;
         return Flux.from(retPublisher).doOnError(ex -> finishAndCleanup(request, ex))
                 .doOnNext(resp -> {
+                    PrintUtil.println(String.format("[Client] end request %s ", request.getPath()));
                     request.getAttribute(ASYNC_SPAN_KEY)
                             .map(span -> (AbstractSpan) span)
                             .ifPresent(span -> {
