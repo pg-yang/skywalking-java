@@ -97,7 +97,6 @@ curl -s --max-time 3 http://localhost:12800/receiveData > ${SCENARIO_HOME}/data/
 [[ ! -f ${SCENARIO_HOME}/data/actualData.yaml ]] && exitOnError "${SCENARIO_NAME}-${SCENARIO_VERSION}, 'actualData.yaml' Not Found!"
 
 echo "logs -> "
-
 cat ${LOGS_HOME}/scenario.out
 
 echo "To validate"
