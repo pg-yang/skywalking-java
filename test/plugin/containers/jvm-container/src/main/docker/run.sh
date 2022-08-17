@@ -84,7 +84,7 @@ export agent_opts="
     -Dskywalking.meter.report_interval=1
     -Xms256m -Xmx256m ${agent_opts}"
 
-bash /var/run/${SCENARIO_NAME}/${SCENARIO_START_SCRIPT} 1>${LOGS_HOME}/scenario.out &
+bash /var/run/${SCENARIO_NAME}/${SCENARIO_START_SCRIPT} 1>${LOGS_HOME}/scenario.out 2>${LOGS_HOME}/scenario-error.out &
 
 healthCheck ${SCENARIO_HEALTH_CHECK_URL}
 
@@ -98,6 +98,7 @@ curl -s --max-time 3 http://localhost:12800/receiveData > ${SCENARIO_HOME}/data/
 
 echo "logs -> "
 cat ${LOGS_HOME}/scenario.out
+cat ${LOGS_HOME}/scenario-error.out
 
 echo "To validate"
 java -jar \
