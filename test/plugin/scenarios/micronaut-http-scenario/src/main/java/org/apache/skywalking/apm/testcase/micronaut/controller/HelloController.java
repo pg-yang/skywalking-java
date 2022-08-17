@@ -40,17 +40,12 @@ public class HelloController {
     @Get(produces = MediaType.TEXT_PLAIN, value = "start")
     public String start() throws InterruptedException {
         try {
-            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/success?a=1&b=2"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/error"));
+            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
         } catch (Exception e) {
             e.printStackTrace();
         }
