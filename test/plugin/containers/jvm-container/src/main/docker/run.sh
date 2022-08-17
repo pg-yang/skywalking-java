@@ -99,6 +99,7 @@ curl -s --max-time 3 http://localhost:12800/receiveData > ${SCENARIO_HOME}/data/
 echo "logs -> "
 cat ${LOGS_HOME}/scenario.out
 cat ${LOGS_HOME}/scenario-error.out
+ps -ef
 
 echo "To validate"
 java -jar \
