@@ -67,11 +67,6 @@ public class HelloController {
         return "success"; //
     }
 
-    @Get(produces = MediaType.TEXT_PLAIN, value = "success2")
-    public String success() {
-        return "success"; //
-    }
-
     @Get(produces = MediaType.TEXT_PLAIN, value = "error")
     public String error() {
         throw new NullPointerException();
