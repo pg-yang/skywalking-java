@@ -42,6 +42,7 @@ public class HelloController {
         try {
             client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
         } catch (Exception e) {
+            // ignor exception
             e.printStackTrace();
         }
         try {
