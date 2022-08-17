@@ -70,6 +70,8 @@ echo "To start mock collector"
 bash ${TOOLS_HOME}/skywalking-mock-collector/bin/collector-startup.sh 1>${LOGS_HOME}/collector.out &
 healthCheck http://localhost:12800/receiveData
 
+tcpdump host 127.0.0.1 > tcpdump.log &
+
 # start applications
 export agent_opts="
     -javaagent:${JACOCO_HOME}/jacocoagent.jar=classdumpdir=${JACOCO_HOME}/classes/${SCENARIO_NAME}${SCENARIO_VERSION},destfile=${JACOCO_HOME}/${SCENARIO_NAME}${SCENARIO_VERSION}.exec,includes=org.apache.skywalking.*,excludes=org.apache.skywalking.apm.dependencies.*:org.apache.skywalking.apm.testcase.*
@@ -100,6 +102,7 @@ echo "logs -> "
 cat ${LOGS_HOME}/scenario.out
 cat ${LOGS_HOME}/scenario-error.out
 ps -ef
+cat  tcpdump.log
 
 echo "To validate"
 java -jar \
