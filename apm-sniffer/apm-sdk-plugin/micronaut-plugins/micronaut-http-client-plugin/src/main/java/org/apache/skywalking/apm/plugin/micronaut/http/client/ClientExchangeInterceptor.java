@@ -107,6 +107,7 @@ public class ClientExchangeInterceptor implements InstanceMethodsAroundIntercept
     }
 
     private void finishAndCleanup(MutableHttpRequest<?> request, Throwable ex) {
+        PrintUtil.println(String.format("[Client] end request error %s ", request.getPath()));
         request.getAttribute(ASYNC_SPAN_KEY)
                 .map(span -> (AbstractSpan) span)
                 .ifPresent(span -> {
