@@ -18,4 +18,5 @@
 
 home="$(cd "$(dirname $0)"; pwd)"
 
-java -jar ${agent_opts} "-Dskywalking.agent.service_name=micronaut-scenario" "-Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &
+java -jar  "-Dskywalking.agent.service_name=micronaut-scenario" "-Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &
+#java -jar ${agent_opts} "-Dskywalking.agent.service_name=micronaut-scenario" "-Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &
