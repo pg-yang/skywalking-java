@@ -29,7 +29,7 @@ import jakarta.inject.Inject;
 @Controller("/micronaut")
 public class HelloController {
     @Inject
-    @Client("http://localhost:8080")
+    @Client("https://www.baidu.com")
     private HttpClient client;
 
     @Get(value = "healthCheck")
