@@ -18,6 +18,6 @@
 
 home="$(cd "$(dirname $0)"; pwd)"
 
-java -jar  "-Dskywalking.agent.service_name=micronaut-scenario-8081" "-Dmicronaut.server.port=8081 -Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &
-java -jar  "-Dskywalking.agent.service_name=micronaut-scenario-8080" "Dmicronaut.server.port=8080 -Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &
+java -jar  "-Dskywalking.agent.service_name=micronaut-scenario-8081" "-Dmicronaut.server.port=8081"  "-Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &
+java -jar  "-Dskywalking.agent.service_name=micronaut-scenario-8080" "-Dmicronaut.server.port=8080"  "-Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &
 #java -jar ${agent_opts} "-Dskywalking.agent.service_name=micronaut-scenario" "-Dskywalking.plugin.micronauthttpclient.collect_http_params=true" "-Dskywalking.plugin.micronauthttpserver.collect_http_params=true"  ${home}/../libs/micronaut-http-scenario.jar &
