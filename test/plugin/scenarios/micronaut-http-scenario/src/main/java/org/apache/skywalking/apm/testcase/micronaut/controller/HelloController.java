@@ -29,7 +29,7 @@ import jakarta.inject.Inject;
 @Controller("/micronaut")
 public class HelloController {
     @Inject
-    @Client("http://localhost:8080")
+    @Client("http://localhost:8081")
     private HttpClient client;
 
     @Get(value = "healthCheck")
@@ -39,6 +39,12 @@ public class HelloController {
 
     @Get(produces = MediaType.TEXT_PLAIN, value = "start")
     public String start() throws InterruptedException {
+        try {
+            client.toBlocking().retrieve(HttpRequest.GET("/micronaut/success"));
+        } catch (Exception e) {
+            // ignor exception
+            e.printStackTrace();
+        }
         try {
             client.toBlocking().retrieve(HttpRequest.GET("/micronaut/404"));
         } catch (Exception e) {
