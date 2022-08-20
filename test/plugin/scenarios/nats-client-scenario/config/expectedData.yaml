@@ -1,0 +1,727 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+segmentItems:
+  - serviceName: nats-client-scenario
+    segmentSize: 25
+    segments:
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/Enqueue/$JS.API.STREAM.INFO.test-stream-v3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.CONSUMER.CREATE.test-stream-v3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: Nats/Pub/Enqueue/$JS.API.CONSUMER.CREATE.test-stream-v3,
+                 networkAddress: '', refType: CrossThread, parentSpanId: 0, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.STREAM.INFO.test-stream-v3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: Nats/Pub/Enqueue/$JS.API.STREAM.INFO.test-stream-v3, networkAddress: '',
+                 refType: CrossThread, parentSpanId: 0, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.STREAM.CREATE.test-stream-v3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: Nats/Pub/Enqueue/$JS.API.STREAM.CREATE.test-stream-v3, networkAddress: '',
+                 refType: CrossThread, parentSpanId: 0, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/Enqueue/$JS.API.STREAM.CREATE.test-stream-v3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/Enqueue/$JS.API.CONSUMER.CREATE.test-stream-v3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/subject-1
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 1, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Sub/subject-1
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Entry
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: sid, value: '1'}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: Nats/Pub/subject-1, networkAddress: 'nats://nats-server:4222',
+                 refType: CrossProcess, parentSpanId: 0, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: not null
+            operationId: 0
+            parentSpanId: 0
+            spanId: 1
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Sub/subject-2
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Entry
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: sid, value: '1'}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: Nats/Pub/subject-2, networkAddress: 'nats://nats-server:4222',
+                 refType: CrossProcess, parentSpanId: 0, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/subject-2
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 2, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: not null
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: Nats/Sub/subject-2, networkAddress: '', refType: CrossThread,
+                 parentSpanId: 1, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: not null
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Entry
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: sid, value: '1'}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: not null,
+                 networkAddress: 'nats://nats-server:4222', refType: CrossProcess, parentSpanId: 0,
+                 parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: not null
+            operationId: 0
+            parentSpanId: 0
+            spanId: 1
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Sub/subject-3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Entry
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: sid, value: '2'}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: Nats/Pub/subject-3, networkAddress: 'nats://nats-server:4222',
+                 refType: CrossProcess, parentSpanId: 0, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: not null
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: Nats/Sub/subject-3, networkAddress: '', refType: CrossThread,
+                 parentSpanId: 1, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.STREAM.INFO.test-stream-v3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 3, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/subject-3
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 4, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.STREAM.INFO.test-stream-v2-
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 5, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.STREAM.CREATE.test-stream-v2-
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 6, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/subject-4
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 7, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.STREAM.NAMES
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 8, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.CONSUMER.INFO.test-stream-v2-.test-stream-v2--durable
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 9, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.CONSUMER.DURABLE.CREATE.test-stream-v2-.test-stream-v2--durable
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 10, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/$JS.API.CONSUMER.MSG.NEXT.test-stream-v2-.test-stream-v2--durable
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Exit
+            peer: nats://nats-server:4222
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+            refs:
+              - {parentEndpoint: 'GET:/nats/start', networkAddress: '', refType: CrossThread,
+                 parentSpanId: 11, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
+      - segmentId: not null
+        spans:
+          - operationName: Nats/Pub/Enqueue/subject-1
+            operationId: 0
+            parentSpanId: 0
+            spanId: 1
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/subject-2
+            operationId: 0
+            parentSpanId: 0
+            spanId: 2
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/$JS.API.STREAM.INFO.test-stream-v3
+            operationId: 0
+            parentSpanId: 0
+            spanId: 3
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/subject-3
+            operationId: 0
+            parentSpanId: 0
+            spanId: 4
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/$JS.API.STREAM.INFO.test-stream-v2-
+            operationId: 0
+            parentSpanId: 0
+            spanId: 5
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/$JS.API.STREAM.CREATE.test-stream-v2-
+            operationId: 0
+            parentSpanId: 0
+            spanId: 6
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/subject-4
+            operationId: 0
+            parentSpanId: 0
+            spanId: 7
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/$JS.API.STREAM.NAMES
+            operationId: 0
+            parentSpanId: 0
+            spanId: 8
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/$JS.API.CONSUMER.INFO.test-stream-v2-.test-stream-v2--durable
+            operationId: 0
+            parentSpanId: 0
+            spanId: 9
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/$JS.API.CONSUMER.DURABLE.CREATE.test-stream-v2-.test-stream-v2--durable
+            operationId: 0
+            parentSpanId: 0
+            spanId: 10
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Pub/Enqueue/$JS.API.CONSUMER.MSG.NEXT.test-stream-v2-.test-stream-v2--durable
+            operationId: 0
+            parentSpanId: 0
+            spanId: 11
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Local
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+          - operationName: Nats/Sub/subject-4
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: MQ
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 132
+            isError: false
+            spanType: Entry
+            peer: ''
+            skipAnalysis: false
+            tags:
+              - {key: reply_to, value: not null}
+              - {key: sid, value: not null}
+              - {key: url, value: 'nats://nats-server:4222'}
+              - {key: http.status_code, value: '200'}
+            refs:
+              - {parentEndpoint: Nats/Pub/subject-4, networkAddress: 'nats://nats-server:4222',
+                 refType: CrossProcess, parentSpanId: 0, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: nats-client-scenario,
+                 traceId: not null}
