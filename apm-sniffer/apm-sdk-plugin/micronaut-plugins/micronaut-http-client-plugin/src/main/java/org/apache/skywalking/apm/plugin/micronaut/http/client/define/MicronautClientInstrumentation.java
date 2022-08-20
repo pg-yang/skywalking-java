@@ -60,7 +60,6 @@ public class MicronautClientInstrumentation extends ClassInstanceMethodsEnhanceP
                         return false;
                     }
                 },
-                // microaut 3.2.0-3.4.3
                 new InstanceMethodsInterceptPoint() {
                     @Override
                     public ElementMatcher<MethodDescription> getMethodsMatcher() {
