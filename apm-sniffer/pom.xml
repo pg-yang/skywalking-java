@@ -37,6 +37,7 @@
         <module>bootstrap-plugins</module>
         <module>optional-plugins</module>
         <module>optional-reporter-plugins</module>
+        <module>apm-sdk-plugin/micronaut-plugins/micronaut-circuitbreaker-plugin</module>
     </modules>
 
     <properties>
