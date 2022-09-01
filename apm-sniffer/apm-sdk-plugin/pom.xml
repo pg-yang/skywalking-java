@@ -28,8 +28,6 @@
 
     <artifactId>apm-sdk-plugin</artifactId>
     <modules>
-        <module>httpclient-commons</module>
-        <module>httpclient-5.x-plugin</module>
         <module>jedis-plugins</module>
     </modules>
     <packaging>pom</packaging>
@@ -52,6 +50,8 @@
     </properties>
 
     <dependencies>
+
+
         <dependency>
             <groupId>org.apache.skywalking</groupId>
             <artifactId>apm-agent-core</artifactId>
@@ -70,12 +70,7 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-test-tools</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 
     <build>

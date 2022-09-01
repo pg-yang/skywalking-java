@@ -17,7 +17,8 @@
   ~
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>java-agent</artifactId>
         <groupId>org.apache.skywalking</groupId>
@@ -33,13 +34,19 @@
         <module>apm-agent-core</module>
         <module>apm-sdk-plugin</module>
         <module>apm-toolkit-activation</module>
-        <module>apm-test-tools</module>
         <module>bootstrap-plugins</module>
-        <module>optional-plugins</module>
-        <module>optional-reporter-plugins</module>
     </modules>
 
     <properties>
         <shade.package>org.apache.skywalking.apm.dependencies</shade.package>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>${bytebuddy.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
 </project>

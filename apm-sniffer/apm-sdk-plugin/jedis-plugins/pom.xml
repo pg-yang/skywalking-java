@@ -39,6 +39,7 @@
     <modules>
         <module>jedis-2.x-3.x-plugin</module>
         <module>jedis-4.x-plugin</module>
+        <module>skywalking-junit</module>
     </modules>
 
 </project>
