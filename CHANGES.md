@@ -5,6 +5,7 @@ Release Notes.
 8.13.0
 ------------------
 
+* Add tag db.type for encache,guava-cache plugin
 
 #### Documentation
 

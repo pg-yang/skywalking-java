@@ -40,11 +40,11 @@ public class EhcacheOperateElementInterceptor implements InstanceMethodsAroundIn
         AbstractSpan span = ContextManager.createLocalSpan("Ehcache/" + method.getName() + "/" + enhanceInfo.getCacheName());
         span.setComponent(ComponentsDefine.EHCACHE);
         SpanLayer.asCache(span);
-
         Element element = (Element) allArguments[0];
         if (element != null && element.getObjectKey() != null) {
             Tags.DB_STATEMENT.set(span, element.getObjectKey().toString());
         }
+        Tags.DB_TYPE.set(span, "Ehcache");
     }
 
     @Override

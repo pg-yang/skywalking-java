@@ -49,6 +49,7 @@ public class EhcacheLockInterceptor implements InstanceMethodsAroundInterceptor 
         if (element != null) {
             Tags.DB_STATEMENT.set(span, element.toString());
         }
+        Tags.DB_TYPE.set(span, "Ehcache");
     }
 
     @Override

@@ -31,6 +31,7 @@ segmentItems:
       peer: ''
       tags:
       - {key: db.statement, value: testKey1}
+      - {key: db.type, value: GuavaCache}
       skipAnalysis: 'false'
     - operationName: GuavaCache/invalidate
       parentSpanId: 0
@@ -44,6 +45,7 @@ segmentItems:
       peer: ''
       tags:
       - {key: db.statement, value: testKey1}
+      - {key: db.type, value: GuavaCache}
       skipAnalysis: 'false'
     - operationName: GuavaCache/get
       parentSpanId: 0
@@ -57,6 +59,7 @@ segmentItems:
       peer: ''
       tags:
       - {key: db.statement, value: testKey1}
+      - {key: db.type, value: GuavaCache}
       skipAnalysis: 'false'
     - operationName: GuavaCache/getIfPresent
       parentSpanId: 0
@@ -70,6 +73,7 @@ segmentItems:
       peer: ''
       tags:
       - {key: db.statement, value: testKey1}
+      - {key: db.type, value: GuavaCache}
       skipAnalysis: 'false'
     - operationName: GuavaCache/putAll
       parentSpanId: 0
@@ -82,6 +86,8 @@ segmentItems:
       spanType: Local
       peer: ''
       skipAnalysis: false
+      tags:
+        - {key: db.type, value: GuavaCache}
     - operationName: GuavaCache/getAllPresent
       parentSpanId: 0
       spanId: 6
@@ -93,6 +99,8 @@ segmentItems:
       spanType: Local
       peer: ''
       skipAnalysis: false
+      tags:
+        - {key: db.type, value: GuavaCache}
     - operationName: GuavaCache/invalidateAll
       parentSpanId: 0
       spanId: 7
@@ -104,6 +112,8 @@ segmentItems:
       spanType: Local
       peer: ''
       skipAnalysis: false
+      tags:
+        - {key: db.type, value: GuavaCache}
     - operationName: GET:/guava-cache-scenario/case/guava
       parentSpanId: -1
       spanId: 0

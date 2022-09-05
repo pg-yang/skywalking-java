@@ -39,6 +39,7 @@ public class GuavaCacheInterceptor implements InstanceMethodsAroundInterceptor {
         if (key != null) {
             Tags.DB_STATEMENT.set(span, key.toString());
         }
+        Tags.DB_TYPE.set(span, "GuavaCache");
         SpanLayer.asCache(span);
     }
 
