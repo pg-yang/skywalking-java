@@ -30,7 +30,10 @@ segmentItems:
       spanType: Local
       peer: ''
       tags:
-      - {key: db.statement, value: dataKey}
+        - {key: cache.key, value: testCache}
+        - {key: cache.type, value: Ehcache}
+        - {key: cache.op, value: write}
+        - {key: cache.cmd, value: put}
       skipAnalysis: 'false'
     - operationName: Ehcache/get/testCache
       parentSpanId: 0
@@ -43,7 +46,10 @@ segmentItems:
       spanType: Local
       peer: ''
       tags:
-      - {key: db.statement, value: dataKey}
+        - {key: cache.key, value: testCache}
+        - {key: cache.type, value: Ehcache}
+        - {key: cache.op, value: read}
+        - {key: cache.cmd, value: get}
       skipAnalysis: 'false'
     - operationName: Ehcache/putAll/testCache
       parentSpanId: 0
@@ -56,6 +62,11 @@ segmentItems:
       spanType: Local
       peer: ''
       skipAnalysis: 'false'
+      tags:
+        - {key: cache.key, value: testCache}
+        - {key: cache.type, value: Ehcache}
+        - {key: cache.op, value: write}
+        - {key: cache.cmd, value: putAll}
     - operationName: Ehcache/tryRead/testCache
       parentSpanId: 0
       spanId: 4
@@ -68,6 +79,7 @@ segmentItems:
       peer: ''
       tags:
       - {key: db.statement, value: dataKey}
+      - {key: db.type, value: Ehcache}
       skipAnalysis: 'false'
     - operationName: Ehcache/releaseRead/testCache
       parentSpanId: 0
@@ -80,7 +92,10 @@ segmentItems:
       spanType: Local
       peer: ''
       tags:
-      - {key: db.statement, value: dataKey}
+        - {key: cache.key, value: testCache}
+        - {key: cache.type, value: Ehcache}
+        - {key: cache.op, value: read}
+        - {key: cache.cmd, value: releaseRead}
       skipAnalysis: 'false'
     - operationName: Ehcache/put/testCache2
       parentSpanId: 0
@@ -93,7 +108,10 @@ segmentItems:
       spanType: Local
       peer: ''
       tags:
-      - {key: db.statement, value: dataKey}
+      - {key: cache.key, value: testCache2}
+      - {key: cache.type, value: Ehcache}
+      - {key: cache.op, value: write}
+      - {key: cache.cmd, value: put}
       skipAnalysis: 'false'
     - operationName: GET:/ehcache-2.x-scenario/case/ehcache
       parentSpanId: -1

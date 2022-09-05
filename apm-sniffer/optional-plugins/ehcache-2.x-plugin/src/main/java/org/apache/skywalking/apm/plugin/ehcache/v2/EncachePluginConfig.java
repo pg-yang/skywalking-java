@@ -15,7 +15,7 @@
  *   limitations under the License.
  */
 
-package org.apache.skywalking.apm.plugin.jedis.v4;
+package org.apache.skywalking.apm.plugin.ehcache.v2;
 
 import org.apache.skywalking.apm.agent.core.boot.PluginConfig;
 
@@ -23,30 +23,17 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class JedisPluginConfig {
+public class EncachePluginConfig {
     public static class Plugin {
-        @PluginConfig(root = JedisPluginConfig.class)
-        public static class Jedis {
-            /**
-             * If set to true, the parameters of the Redis command would be collected.
-             */
-            public static boolean TRACE_REDIS_PARAMETERS = true;
-            /**
-             * For the sake of performance, SkyWalking won't save Redis parameter string into the tag.
-             * If TRACE_REDIS_PARAMETERS is set to true, the first {@code REDIS_PARAMETER_MAX_LENGTH} parameter
-             * characters would be collected.
-             * <p>
-             * Set a negative number to save specified length of parameter string to the tag.
-             */
-            public static int REDIS_PARAMETER_MAX_LENGTH = 128;
-
+        @PluginConfig(root = EncachePluginConfig.class)
+        public static class Encache {
             /**
              * First , Operation represent a cache span is write or write action , and the op is tagged with key "cache.op"
              * This config term define what command should be converted to write Operation .
              * In OAP , virtual cache service analysis cache write/read metrics separately
              *
              * @see org.apache.skywalking.apm.agent.core.context.tag.Tags#CACHE_OP
-             * @see AbstractConnectionInterceptor#pareOperation(String)
+             * @see EncacheOperationConvertor#parseOperation(String)
              */
             public static Set<String> OPERATION_MAPPING_WRITE = new HashSet<>(Arrays.asList(
                     "tryRemoveImmediately",
@@ -54,7 +41,8 @@ public class JedisPluginConfig {
                     "removeAndReturnElement",
                     "removeAll",
                     "removeQuiet",
-                    "removeWithWriter"
+                    "removeWithWriter",
+                    "put"
             ));
             /**
              * First , Operation represent a cache span is write or read action , and the op is tagged with key "cache.op"
@@ -62,7 +50,7 @@ public class JedisPluginConfig {
              * In OAP , virtual cache service analysis cache write/read metrics separately
              *
              * @see org.apache.skywalking.apm.agent.core.context.tag.Tags#CACHE_OP
-             * @see AbstractConnectionInterceptor#pareOperation(String)
+             * @see EncacheOperationConvertor#parseOperation(String)
              */
             public static Set<String> OPERATION_MAPPING_READ = new HashSet<>(Arrays.asList(
                     "get",
@@ -70,7 +58,8 @@ public class JedisPluginConfig {
                     "getQuiet",
                     "getKeys",
                     "getKeysWithExpiryCheck",
-                    "getKeysNoDuplicateCheck"
+                    "getKeysNoDuplicateCheck",
+                    "releaseRead"
             ));
         }
     }

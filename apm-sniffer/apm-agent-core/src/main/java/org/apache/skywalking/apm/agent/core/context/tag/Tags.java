@@ -47,6 +47,11 @@ public final class Tags {
      */
     public static final StringTag DB_TYPE = new StringTag(3, "db.type");
 
+    public static final StringTag CACHE_TYPE = new StringTag(3, "cache.type");
+    public static final StringTag CACHE_OP = new StringTag(3, "cache.op");
+    public static final StringTag CACHE_CMD = new StringTag(3, "cache.cmd");
+    public static final StringTag CACHE_KEY = new StringTag(3, "cache.key");
+
     /**
      * DB_INSTANCE records database instance name.
      */
@@ -56,6 +61,7 @@ public final class Tags {
      * DB_STATEMENT records the sql statement of the database access.
      */
     public static final StringTag DB_STATEMENT = new StringTag(5, "db.statement");
+
 
     /**
      * DB_BIND_VARIABLES records the bind variables of sql statement.

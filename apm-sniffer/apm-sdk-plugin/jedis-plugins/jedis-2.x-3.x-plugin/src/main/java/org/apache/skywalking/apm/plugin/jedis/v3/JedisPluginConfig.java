@@ -19,6 +19,10 @@ package org.apache.skywalking.apm.plugin.jedis.v3;
 
 import org.apache.skywalking.apm.agent.core.boot.PluginConfig;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class JedisPluginConfig {
     public static class Plugin {
         @PluginConfig(root = JedisPluginConfig.class)
@@ -35,6 +39,67 @@ public class JedisPluginConfig {
              * Set a negative number to save specified length of parameter string to the tag.
              */
             public static int REDIS_PARAMETER_MAX_LENGTH = 128;
+
+            /**
+             * First , Operation represent a cache span is write or write action , and the op is tagged with key "cache.op"
+             * This config term define what command should be converted to write Operation .
+             * In OAP , virtual cache service analysis cache write/read metrics separately
+             *
+             * @see org.apache.skywalking.apm.agent.core.context.tag.Tags#CACHE_OP
+             * @see JedisMethodInterceptor#pareOperation(String)
+             */
+            public static Set<String> OPERATION_MAPPING_WRITE = new HashSet<>(Arrays.asList(
+                    "del",
+                    "setex",
+                    "brpoplpush",
+                    "brpoplpush",
+                    "lpushx",
+                    "setnx",
+                    "lset",
+                    "decrBy",
+                    "blpop",
+                    "rpoplpush",
+                    "incr",
+                    "setbit",
+                    "set",
+                    "sadd",
+                    "rpushx",
+                    "hdel",
+                    "lrem",
+                    "hset",
+                    "hdel"
+            ));
+            /**
+             * First , Operation represent a cache span is write or read action , and the op is tagged with key "cache.op"
+             * This config term define what command should be converted to write Operation .
+             * In OAP , virtual cache service analysis cache write/read metrics separately
+             *
+             * @see org.apache.skywalking.apm.agent.core.context.tag.Tags#CACHE_OP
+             * @see JedisMethodInterceptor#pareOperation(String)
+             */
+            public static Set<String> OPERATION_MAPPING_READ = new HashSet<>(Arrays.asList(
+                    "zcount",
+                    "hscan",
+                    "zlexcount",
+                    "bitcount",
+                    "llen",
+                    "zscan",
+                    "hvals",
+                    "scan",
+                    "zrank",
+                    "blpop",
+                    "get",
+                    "hexists",
+                    "zcard",
+                    "zrevrank",
+                    "setrange",
+                    "sdiff",
+                    "zrevrange",
+                    "getbit",
+                    "scard",
+                    "hget"
+                    ));
+
         }
     }
 }

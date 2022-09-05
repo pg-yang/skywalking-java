@@ -29,14 +29,16 @@ import org.apache.skywalking.apm.network.trace.component.ComponentsDefine;
 
 import java.lang.reflect.Method;
 
+import static org.apache.skywalking.apm.plugin.ehcache.v2.EncacheOperationConvertor.parseOperation;
+
 public class EhcacheOperateObjectInterceptor implements InstanceMethodsAroundInterceptor {
 
     @Override
     public void beforeMethod(EnhancedInstance objInst, Method method, Object[] allArguments, Class<?>[] argumentsTypes,
         MethodInterceptResult result) throws Throwable {
         EhcacheEnhanceInfo enhanceInfo = (EhcacheEnhanceInfo) objInst.getSkyWalkingDynamicField();
-
-        AbstractSpan span = ContextManager.createLocalSpan("Ehcache/" + method.getName() + "/" + enhanceInfo.getCacheName());
+        String methodName = method.getName();
+        AbstractSpan span = ContextManager.createLocalSpan("Ehcache/" + methodName + "/" + enhanceInfo.getCacheName());
         span.setComponent(ComponentsDefine.EHCACHE);
         SpanLayer.asCache(span);
 
@@ -44,6 +46,8 @@ public class EhcacheOperateObjectInterceptor implements InstanceMethodsAroundInt
         if (element != null) {
             Tags.DB_STATEMENT.set(span, element.toString());
         }
+        Tags.DB_TYPE.set(span, "Ehcache");
+        parseOperation(methodName).ifPresent(op -> Tags.CACHE_OP.set(span, op));
     }
 
     @Override
