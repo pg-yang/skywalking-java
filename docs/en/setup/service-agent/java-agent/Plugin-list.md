@@ -49,7 +49,7 @@
 - jdk-http-plugin
 - jdk-threading-plugin
 - jedis-2.x-3.x
-- jedis-4.x
+- jedis-4.x-5.x
 - jetty-client-9.0
 - jetty-client-9.x
 - jetty-server-9.x

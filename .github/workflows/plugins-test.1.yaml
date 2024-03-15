@@ -65,7 +65,8 @@ jobs:
           - jdk-threading-scenario
           - jedis-2.x-scenario
           - jedis-3.1.x-plus-scenario
-          - jedis-4.x-scenario
+          - jedis-4.x-5.x-scenario
+          - jedis-5.x-failover-scenario
           - jedis-3.3.x-plus-scenario
           - jedis-2.x-3.x-cluster-scenario
           - jetty-scenario
