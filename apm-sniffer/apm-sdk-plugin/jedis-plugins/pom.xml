@@ -36,7 +36,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>jedis-2.x-3.x-plugin</module>
-        <module>jedis-4.x-plugin</module>
+        <module>jedis-4.x-5.x-plugin</module>
     </modules>
 
 </project>

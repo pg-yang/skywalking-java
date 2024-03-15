@@ -67,27 +67,14 @@ public abstract class AbstractClassEnhancePluginDefine {
         }
 
         LOGGER.debug("prepare to enhance class {} by {}.", transformClassName, interceptorDefineClassName);
-        WitnessFinder finder = WitnessFinder.INSTANCE;
         /**
-         * find witness classes for enhance class
+         * determine whether the class can be enhanced.
          */
-        String[] witnessClasses = witnessClasses();
-        if (witnessClasses != null) {
-            for (String witnessClass : witnessClasses) {
-                if (!finder.exist(witnessClass, classLoader)) {
-                    LOGGER.warn("enhance class {} by plugin {} is not activated. Witness class {} does not exist.", transformClassName, interceptorDefineClassName, witnessClass);
-                    return null;
-                }
-            }
-        }
-        List<WitnessMethod> witnessMethods = witnessMethods();
-        if (!CollectionUtil.isEmpty(witnessMethods)) {
-            for (WitnessMethod witnessMethod : witnessMethods) {
-                if (!finder.exist(witnessMethod, classLoader)) {
-                    LOGGER.warn("enhance class {} by plugin {} is not activated. Witness method {} does not exist.", transformClassName, interceptorDefineClassName, witnessMethod);
-                    return null;
-                }
-            }
+        if (!witnessEnhance(WitnessFinder.INSTANCE, classLoader, transformClassName)) {
+            LOGGER.warn("enhance class {} by plugin {} is not activated. Because witness not passed.",
+                        transformClassName, interceptorDefineClassName
+            );
+            return null;
         }
 
         /**
@@ -115,6 +102,42 @@ public abstract class AbstractClassEnhancePluginDefine {
         newClassBuilder = this.enhanceInstance(typeDescription, newClassBuilder, classLoader, context);
 
         return newClassBuilder;
+    }
+
+    /**
+     * determine whether the class can be enhanced.
+     *
+     * @param witnessFinder      the tools to help test target class or method whether existing
+     * @param classLoader        the classLoader of target class
+     * @param transformClassName the name of target class
+     * @return true if the class can be enhanced, otherwise false
+     */
+    protected boolean witnessEnhance(final WitnessFinder witnessFinder,
+                                     final ClassLoader classLoader,
+                                     final String transformClassName) {
+        String[] witnessClasses = witnessClasses();
+        if (witnessClasses != null) {
+            for (String witnessClass : witnessClasses) {
+                if (!witnessFinder.exist(witnessClass, classLoader)) {
+                    LOGGER.warn("enhance class {} is not activated. Witness class {} does not exist.",
+                                transformClassName, witnessClass
+                    );
+                    return false;
+                }
+            }
+        }
+        List<WitnessMethod> witnessMethods = witnessMethods();
+        if (!CollectionUtil.isEmpty(witnessMethods)) {
+            for (WitnessMethod witnessMethod : witnessMethods) {
+                if (!witnessFinder.exist(witnessMethod, classLoader)) {
+                    LOGGER.warn("enhance class {} is not activated. Witness method {} does not exist.",
+                                transformClassName, witnessMethod
+                    );
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
